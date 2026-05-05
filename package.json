@@ -1,9 +1,12 @@
 {
+  "homepage": "https://github.com/HumayunNaseer/Portfolio",
   "name": "humayun-naseer-portfolio",
   "version": "1.0.0",
   "private": true,
   "type": "module",
   "scripts": {
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d dist",
     "dev": "vite",
     "build": "tsc --noEmit && vite build",
     "preview": "vite preview"
