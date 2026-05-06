@@ -1,21 +1,25 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Mail, Linkedin, Github, Send, CheckCircle, AlertCircle, Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import emailjs from "@emailjs/browser";
 
-const FORMSPREE_ENDPOINT = "https://formspree.io/f/YOUR_FORM_ID";
+// EmailJS Configuration
+emailjs.init("Eh62kWt5YZ2OW467Y");
 
 type Status = "idle" | "loading" | "success" | "error";
 
 interface FormData {
   name: string;
   email: string;
+  subject: string;
   message: string;
 }
 
 interface FormErrors {
   name?: string;
   email?: string;
+  subject?: string;
   message?: string;
 }
 
@@ -24,53 +28,57 @@ function validate(data: FormData): FormErrors {
   if (!data.name.trim()) errors.name = "Name is required";
   if (!data.email.trim()) errors.email = "Email is required";
   else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(data.email)) errors.email = "Enter a valid email";
+  if (!data.subject.trim()) errors.subject = "Subject is required";
   if (!data.message.trim()) errors.message = "Message is required";
   else if (data.message.trim().length < 10) errors.message = "Message must be at least 10 characters";
   return errors;
 }
 
 export function Contact() {
-  const [form, setForm] = useState<FormData>({ name: "", email: "", message: "" });
+  const form = useRef<HTMLFormElement>(null);
+  const [formData, setFormData] = useState<FormData>({ name: "", email: "", subject: "", message: "" });
   const [errors, setErrors] = useState<FormErrors>({});
   const [touched, setTouched] = useState<Record<string, boolean>>({});
   const [status, setStatus] = useState<Status>("idle");
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
-    const updated = { ...form, [name]: value };
-    setForm(updated);
+    const updated = { ...formData, [name]: value };
+    setFormData(updated);
     if (touched[name]) setErrors(validate(updated));
   };
 
   const handleBlur = (e: React.FocusEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name } = e.target;
     setTouched((t) => ({ ...t, [name]: true }));
-    setErrors(validate(form));
+    setErrors(validate(formData));
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setTouched({ name: true, email: true, message: true });
-    const errs = validate(form);
+    setTouched({ name: true, email: true, subject: true, message: true });
+    const errs = validate(formData);
     setErrors(errs);
     if (Object.keys(errs).length > 0) return;
 
     setStatus("loading");
     try {
-      const res = await fetch(FORMSPREE_ENDPOINT, {
-        method: "POST",
-        headers: { "Content-Type": "application/json", Accept: "application/json" },
-        body: JSON.stringify(form),
-      });
-      if (res.ok) {
-        setStatus("success");
-        setForm({ name: "", email: "", message: "" });
-        setTouched({});
-        setErrors({});
-      } else {
-        setStatus("error");
-      }
-    } catch {
+      const templateParams = {
+        name: formData.name,
+        email: formData.email,
+        subject: formData.subject,
+        message: formData.message,
+        time: new Date().toLocaleString(),
+      };
+
+      await emailjs.send("service_fqryn1f", "template_iv84aow", templateParams);
+      
+      setStatus("success");
+      setFormData({ name: "", email: "", subject: "", message: "" });
+      setTouched({});
+      setErrors({});
+    } catch (error) {
+      console.error("EmailJS Error:", error);
       setStatus("error");
     }
   };
@@ -172,6 +180,7 @@ export function Contact() {
               ) : (
                 <motion.form
                   key="form"
+                  ref={form}
                   onSubmit={handleSubmit}
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
@@ -191,7 +200,7 @@ export function Contact() {
                       type="text"
                       name="name"
                       placeholder="Your name"
-                      value={form.name}
+                      value={formData.name}
                       onChange={handleChange}
                       onBlur={handleBlur}
                       className={`${inputBase} ${errors.name && touched.name ? "border-red-400/60 focus:ring-red-400/30" : "border-border/50"}`}
@@ -206,7 +215,7 @@ export function Contact() {
                       type="email"
                       name="email"
                       placeholder="your@email.com"
-                      value={form.email}
+                      value={formData.email}
                       onChange={handleChange}
                       onBlur={handleBlur}
                       className={`${inputBase} ${errors.email && touched.email ? "border-red-400/60 focus:ring-red-400/30" : "border-border/50"}`}
@@ -217,11 +226,26 @@ export function Contact() {
                   </div>
 
                   <div>
+                    <input
+                      type="text"
+                      name="subject"
+                      placeholder="Subject"
+                      value={formData.subject}
+                      onChange={handleChange}
+                      onBlur={handleBlur}
+                      className={`${inputBase} ${errors.subject && touched.subject ? "border-red-400/60 focus:ring-red-400/30" : "border-border/50"}`}
+                    />
+                    {errors.subject && touched.subject && (
+                      <p className="text-xs text-red-400 mt-1.5 ml-1">{errors.subject}</p>
+                    )}
+                  </div>
+
+                  <div>
                     <textarea
                       name="message"
                       placeholder="What's on your mind?"
                       rows={5}
-                      value={form.message}
+                      value={formData.message}
                       onChange={handleChange}
                       onBlur={handleBlur}
                       className={`${inputBase} resize-none ${errors.message && touched.message ? "border-red-400/60 focus:ring-red-400/30" : "border-border/50"}`}
