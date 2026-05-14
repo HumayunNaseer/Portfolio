@@ -2,22 +2,22 @@ import { motion } from "framer-motion";
 import { Award, ExternalLink, Calendar } from "lucide-react";
 
 const certifications = [
-  {
-    title: "AWS Certified Developer – Associate",
-    issuer: "Amazon Web Services (AWS)",
-    date: "Jan 2024",
-    credentialId: "AWS-DEV-2024-XXXXX",
-    description:
-      "Validates proficiency in developing, deploying, and debugging cloud-based applications using AWS services.",
-    badgeColor: "from-orange-500/20 to-yellow-500/10",
-    borderColor: "border-orange-500/30",
-    iconColor: "text-orange-400",
-  },
+  // {
+  //   title: "AWS Certified Developer – Associate",
+  //   issuer: "Amazon Web Services (AWS)",
+  //   date: "Jan 2024",
+  //   credentialId: "AWS-DEV-2024-XXXXX",
+  //   description:
+  //     "Validates proficiency in developing, deploying, and debugging cloud-based applications using AWS services.",
+  //   badgeColor: "from-orange-500/20 to-yellow-500/10",
+  //   borderColor: "border-orange-500/30",
+  //   iconColor: "text-orange-400",
+  // },
   {
     title: "Ruby on Rails Professional Developer",
-    issuer: "Linux Foundation",
-    date: "Mar 2023",
-    credentialId: "LF-RORPD-2023-XXXXX",
+    issuer: "Michael Hartl",
+    date: "Mar 2020",
+    // credentialId: "LF-RORPD-2023-XXXXX",
     description:
       "Demonstrates expertise in building, testing, and deploying production-grade Ruby on Rails applications with best practices.",
     badgeColor: "from-red-500/20 to-pink-500/10",

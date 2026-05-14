@@ -3,6 +3,7 @@ import { motion } from "framer-motion";
 import { ArrowRight, Download } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import avatarImg from "@/assets/avatar.png";
+import myImage from "@/assets/personal-image.png";
 
 const TITLES = [
   "Senior Full Stack Engineer",
@@ -139,7 +140,7 @@ export function Hero() {
           <div className="relative w-64 h-64 md:w-80 md:h-80 rounded-full shadow-2xl">
             <div className="absolute inset-0 rounded-full bg-gradient-to-tr from-primary/40 to-transparent opacity-60 z-10" />
             <img
-              src={avatarImg}
+              src={myImage}
               alt="Humayun Naseer profile"
               className="w-full h-full rounded-full object-cover border-2 border-primary/30"
             />
