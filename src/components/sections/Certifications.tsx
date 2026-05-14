@@ -71,7 +71,7 @@ export function Certifications() {
                     <Calendar size={12} />
                     <span>{cert.date}</span>
                   </div>
-                  <span className="font-mono opacity-60">{cert.credentialId}</span>
+                  {/* <span className="font-mono opacity-60">{cert.credentialId}</span> */}
                 </div>
               </div>
             </motion.div>
