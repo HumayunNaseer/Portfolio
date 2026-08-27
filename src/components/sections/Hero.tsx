@@ -4,6 +4,7 @@ import { ArrowRight, Download } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import avatarImg from "@/assets/avatar.png";
 import myImage from "@/assets/personal-image.png";
+import resumePdf from "@/assets/Humayun_Naseer_Senior_Software_Engineer.pdf";
 
 const TITLES = [
   "Senior Full Stack Engineer",
@@ -124,7 +125,7 @@ export function Hero() {
               </a>
             </Button>
             <Button size="lg" variant="outline" className="gap-2 text-base h-12 px-8" asChild>
-              <a href="#">
+              <a href={resumePdf} download="Humayun_Naseer_Senior_Software_Engineer.pdf">
                 Download Resume <Download className="w-4 h-4" />
               </a>
             </Button>

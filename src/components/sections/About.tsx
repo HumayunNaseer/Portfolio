@@ -4,7 +4,7 @@ import { motion, useInView } from "framer-motion";
 const STATS = [
   { value: 6, suffix: "+", label: "Years Experience" },
   { value: 3, suffix: "", label: "Companies" },
-  { value: 20, suffix: "+", label: "Projects Delivered" },
+  { value: 15, suffix: "+", label: "Projects Delivered" },
   { value: 10, suffix: "+", label: "Happy Clients" },
 ];
 
@@ -47,7 +47,9 @@ export function About() {
             <p>
               I am a Full-stack developer with over 6 years of experience specializing in{" "}
               <strong className="text-foreground">Ruby on Rails</strong> and{" "}
-              <strong className="text-foreground">React.js</strong>. My expertise lies in
+              <strong className="text-foreground">React.js</strong>, with hands-on experience in{" "}
+              <strong className="text-foreground">JavaScript</strong> and{" "}
+              <strong className="text-foreground">Python</strong>. My expertise lies in
               building scalable, maintainable, and high-performance web applications for
               international clients across diverse industries.
             </p>

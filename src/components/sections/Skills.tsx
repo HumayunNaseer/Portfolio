@@ -27,10 +27,14 @@ const skillCategories: SkillCategory[] = [
     title: "Backend",
     skills: [
       { name: "Ruby on Rails", icon: Server },
+      { name: "Python", icon: Code },
+      { name: "Flask", icon: Server },
       { name: "PostgreSQL", icon: Database },
       { name: "MySQL", icon: Database },
       { name: "Elasticsearch", icon: Database },
       { name: "REST APIs", icon: Globe },
+      { name: "RAG", icon: Database },
+      { name: "LLM", icon: Code },
     ],
   },
   {
